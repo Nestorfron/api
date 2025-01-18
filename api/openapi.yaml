@@ -1939,10 +1939,10 @@ components:
           description: The detailed description of the job offer.
         salary_range_min:
           description: The minimum salary range.
-          format: '^\d+(\.\d+)?$'
+          format: float
         salary_range_max:
           description: The maximum salary range.
-          format: '^\d+(\.\d+)?$'
+          format: float
         publication_date:
           description: The date when the job offer was published.
           format: date-time
@@ -1991,10 +1991,10 @@ components:
           description: The detailed description of the job offer.
         salary_range_min:
           description: The minimum salary range.
-          format: '^\d+(\.\d+)?$'
+          format: float
         salary_range_max:
           description: The maximum salary range.
-          format: '^\d+(\.\d+)?$'
+          format: float
         deadline:
           description: The deadline for the job offer application.
           format: date-time
