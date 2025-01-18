@@ -16,7 +16,7 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-- url: http://127.0.0.1:3001/
+- url: https://api-bay-iota-92.vercel.app/
 tags:
 - name: Reclutamiento y selección de personal
 paths:
