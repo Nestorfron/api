@@ -4,7 +4,6 @@
   "description": "Plataforma integral para conectar a empresas e individuos en un entorno enfocado en el desarrollo profesional. El sistema permitirá a los reclutadores publicar y gestionar ofertas de empleo de manera eficiente, optimizando la selección de candidatos calificados.",
   "main": "index.js",
   "scripts": {
-    "prestart": "npm install",
     "start": "node api/index.js"
   },
   "keywords": [
