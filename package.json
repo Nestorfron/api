@@ -4,19 +4,30 @@
   "description": "Plataforma integral para conectar a empresas e individuos en un entorno enfocado en el desarrollo profesional. El sistema permitirá a los reclutadores publicar y gestionar ofertas de empleo de manera eficiente, optimizando la selección de candidatos calificados.",
   "main": "index.js",
   "scripts": {
-    "start": "node api/index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",  
+    "deploy": "vercel --prod",  
+    "generate-docs": "openapi-generator-cli generate -i api/openapi.yaml -g html -o ./docs"  
   },
   "keywords": [
-    "swagger"
+    "swagger",
+    "openapi",
+    "api",
+    "reclutamiento"
   ],
   "license": "Unlicense",
   "private": true,
   "dependencies": {
-    "connect": "^3.2.0",
-    "js-yaml": "^3.3.0",
-    "oas3-tools": "^2.2.3"
+    "express": "^4.17.1",  
+    "connect": "^3.2.0",   
+    "js-yaml": "^3.3.0",   
+    "oas3-tools": "^2.2.3" 
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.15.3"
+    "@openapitools/openapi-generator-cli": "^2.15.3",  
+    "nodemon": "^2.0.19"  
+  },
+  "engines": {
+    "node": "14.x"  
   }
 }
