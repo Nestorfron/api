@@ -1,0 +1,23 @@
+{
+  "name": "plataforma-de-reclutamiento-y-selecci-n-de-personal-openapi-3-1",
+  "version": "1.0.11",
+  "description": "Plataforma integral para conectar a empresas e individuos en un entorno enfocado en el desarrollo profesional. El sistema permitirá a los reclutadores publicar y gestionar ofertas de empleo de manera eficiente, optimizando la selección de candidatos calificados.",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "oas3-tools": "^2.2.3"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.15.3"
+  }
+}

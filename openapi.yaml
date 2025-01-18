@@ -1,0 +1,2088 @@
+openapi: 3.1.0
+info:
+  title: PLATAFORMA DE RECLUTAMIENTO Y SELECCIÓN DE PERSONAL - OpenAPI 3.1
+  description: "Plataforma integral para conectar a empresas e individuos en un entorno\
+    \ enfocado en el desarrollo profesional. El sistema permitirá a los reclutadores\
+    \ publicar y gestionar ofertas de empleo de manera eficiente, optimizando la selecció\
+    n de candidatos calificados."
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: http://127.0.0.1:3001/
+tags:
+- name: Reclutamiento y selección de personal
+paths:
+  /users:
+    get:
+      tags:
+      - Users
+      summary: Get all users
+      description: Retrieve a list of all users.
+      operationId: usersGET
+      responses:
+        "200":
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/User'
+                x-content-type: application/json
+        "500":
+          description: Server error.
+      x-swagger-router-controller: Users
+    post:
+      tags:
+      - Users
+      summary: Create a new user
+      description: Add a new user to the database.
+      operationId: usersPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+        required: true
+      responses:
+        "201":
+          description: User created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Invalid input.
+        "500":
+          description: Server error.
+      x-swagger-router-controller: Users
+  /users/{id}:
+    get:
+      tags:
+      - Users
+      summary: Get user by ID
+      description: Retrieve a specific user by their ID.
+      operationId: usersIdGET
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The user data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found.
+        "500":
+          description: Server error.
+      x-swagger-router-controller: Users
+    put:
+      tags:
+      - Users
+      summary: Update a user
+      description: Update the details of a specific user.
+      operationId: usersIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+        required: true
+      responses:
+        "200":
+          description: User updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Invalid input.
+        "404":
+          description: User not found.
+        "500":
+          description: Server error.
+      x-swagger-router-controller: Users
+    delete:
+      tags:
+      - Users
+      summary: Delete a user
+      description: Remove a user from the database.
+      operationId: usersIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: User deleted successfully.
+        "404":
+          description: User not found.
+        "500":
+          description: Server error.
+      x-swagger-router-controller: Users
+  /roles:
+    get:
+      tags:
+      - Roles
+      summary: Retrieve all roles
+      operationId: rolesGET
+      responses:
+        "200":
+          description: A list of roles.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Role'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Roles
+    post:
+      tags:
+      - Roles
+      summary: Create a new role
+      operationId: rolesPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleInput'
+        required: true
+      responses:
+        "201":
+          description: Role created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Roles
+  /roles/{id}:
+    get:
+      tags:
+      - Roles
+      summary: Retrieve a role by ID
+      operationId: rolesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the role to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested role.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        "404":
+          description: Role not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Roles
+    put:
+      tags:
+      - Roles
+      summary: Update a role by ID
+      operationId: rolesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the role to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleInput'
+        required: true
+      responses:
+        "200":
+          description: Role updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        "404":
+          description: Role not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Roles
+    delete:
+      tags:
+      - Roles
+      summary: Delete a role by ID
+      operationId: rolesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the role to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Role deleted successfully.
+        "404":
+          description: Role not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Roles
+  /actions:
+    get:
+      tags:
+      - Actions
+      summary: Retrieve all actions
+      operationId: actionsGET
+      responses:
+        "200":
+          description: A list of actions.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Action'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Actions
+    post:
+      tags:
+      - Actions
+      summary: Create a new action
+      operationId: actionsPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActionInput'
+        required: true
+      responses:
+        "201":
+          description: Action created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Action'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Actions
+  /actions/{id}:
+    get:
+      tags:
+      - Actions
+      summary: Retrieve an action by ID
+      operationId: actionsIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the action to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Action'
+        "404":
+          description: Action not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Actions
+    put:
+      tags:
+      - Actions
+      summary: Update an action by ID
+      operationId: actionsIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the action to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActionInput'
+        required: true
+      responses:
+        "200":
+          description: Action updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Action'
+        "404":
+          description: Action not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Actions
+    delete:
+      tags:
+      - Actions
+      summary: Delete an action by ID
+      operationId: actionsIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the action to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Action deleted successfully.
+        "404":
+          description: Action not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Actions
+  /application-statuses:
+    get:
+      tags:
+      - ApplicationStatuses
+      summary: Retrieve all application statuses
+      operationId: application_statusesGET
+      responses:
+        "200":
+          description: A list of application statuses.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApplicationStatus'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ApplicationStatuses
+    post:
+      tags:
+      - ApplicationStatuses
+      summary: Create a new application status
+      operationId: application_statusesPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationStatusInput'
+        required: true
+      responses:
+        "201":
+          description: Application status created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationStatus'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ApplicationStatuses
+  /application-statuses/{id}:
+    get:
+      tags:
+      - ApplicationStatuses
+      summary: Retrieve an application status by ID
+      operationId: application_statusesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the application status to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested application status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationStatus'
+        "404":
+          description: Application status not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ApplicationStatuses
+    put:
+      tags:
+      - ApplicationStatuses
+      summary: Update an application status by ID
+      operationId: application_statusesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the application status to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationStatusInput'
+        required: true
+      responses:
+        "200":
+          description: Application status updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationStatus'
+        "404":
+          description: Application status not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ApplicationStatuses
+    delete:
+      tags:
+      - ApplicationStatuses
+      summary: Delete an application status by ID
+      operationId: application_statusesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the application status to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Application status deleted successfully.
+        "404":
+          description: Application status not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ApplicationStatuses
+  /change-histories:
+    get:
+      tags:
+      - ChangeHistories
+      summary: Retrieve all change histories
+      operationId: change_historiesGET
+      responses:
+        "200":
+          description: A list of change histories.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ChangeHistory'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ChangeHistories
+    post:
+      tags:
+      - ChangeHistories
+      summary: Create a new change history record
+      operationId: change_historiesPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeHistoryInput'
+        required: true
+      responses:
+        "201":
+          description: Change history record created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeHistory'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ChangeHistories
+  /change-histories/{id}:
+    get:
+      tags:
+      - ChangeHistories
+      summary: Retrieve a change history record by ID
+      operationId: change_historiesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the change history record to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested change history record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeHistory'
+        "404":
+          description: Change history record not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ChangeHistories
+    put:
+      tags:
+      - ChangeHistories
+      summary: Update a change history record by ID
+      operationId: change_historiesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the change history record to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeHistoryInput'
+        required: true
+      responses:
+        "200":
+          description: Change history record updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeHistory'
+        "404":
+          description: Change history record not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ChangeHistories
+    delete:
+      tags:
+      - ChangeHistories
+      summary: Delete a change history record by ID
+      operationId: change_historiesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the change history record to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Change history record deleted successfully.
+        "404":
+          description: Change history record not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: ChangeHistories
+  /cities:
+    get:
+      tags:
+      - Cities
+      summary: Retrieve all cities
+      operationId: citiesGET
+      responses:
+        "200":
+          description: A list of cities.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/City'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Cities
+    post:
+      tags:
+      - Cities
+      summary: Create a new city
+      operationId: citiesPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CityInput'
+        required: true
+      responses:
+        "201":
+          description: City created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Cities
+  /cities/{id}:
+    get:
+      tags:
+      - Cities
+      summary: Retrieve a city by ID
+      operationId: citiesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the city to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested city.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        "404":
+          description: City not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Cities
+    put:
+      tags:
+      - Cities
+      summary: Update a city by ID
+      operationId: citiesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the city to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CityInput'
+        required: true
+      responses:
+        "200":
+          description: City updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        "404":
+          description: City not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Cities
+    delete:
+      tags:
+      - Cities
+      summary: Delete a city by ID
+      operationId: citiesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the city to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: City deleted successfully.
+        "404":
+          description: City not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Cities
+  /countries:
+    get:
+      tags:
+      - Countries
+      summary: Retrieve all countries
+      operationId: countriesGET
+      responses:
+        "200":
+          description: A list of countries.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Country'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Countries
+    post:
+      tags:
+      - Countries
+      summary: Create a new country
+      operationId: countriesPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CountryInput'
+        required: true
+      responses:
+        "201":
+          description: Country created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Country'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Countries
+  /countries/{id}:
+    get:
+      tags:
+      - Countries
+      summary: Retrieve a country by ID
+      operationId: countriesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the country to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested country.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Country'
+        "404":
+          description: Country not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Countries
+    put:
+      tags:
+      - Countries
+      summary: Update a country by ID
+      operationId: countriesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the country to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CountryInput'
+        required: true
+      responses:
+        "200":
+          description: Country updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Country'
+        "404":
+          description: Country not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Countries
+    delete:
+      tags:
+      - Countries
+      summary: Delete a country by ID
+      operationId: countriesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the country to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Country deleted successfully.
+        "404":
+          description: Country not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Countries
+  /entities:
+    get:
+      tags:
+      - Entities
+      summary: Retrieve all entities
+      operationId: entitiesGET
+      responses:
+        "200":
+          description: A list of entities.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Entity'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Entities
+    post:
+      tags:
+      - Entities
+      summary: Create a new entity
+      operationId: entitiesPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityInput'
+        required: true
+      responses:
+        "201":
+          description: Entity created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Entities
+  /entities/{id}:
+    get:
+      tags:
+      - Entities
+      summary: Retrieve an entity by ID
+      operationId: entitiesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the entity to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested entity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        "404":
+          description: Entity not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Entities
+    put:
+      tags:
+      - Entities
+      summary: Update an entity by ID
+      operationId: entitiesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the entity to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityInput'
+        required: true
+      responses:
+        "200":
+          description: Entity updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        "404":
+          description: Entity not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Entities
+    delete:
+      tags:
+      - Entities
+      summary: Delete an entity by ID
+      operationId: entitiesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the entity to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Entity deleted successfully.
+        "404":
+          description: Entity not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Entities
+  /jobapplications:
+    get:
+      tags:
+      - JobApplications
+      summary: Retrieve all job applications
+      operationId: jobapplicationsGET
+      responses:
+        "200":
+          description: A list of job applications.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/JobApplication'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobApplications
+    post:
+      tags:
+      - JobApplications
+      summary: Create a new job application
+      operationId: jobapplicationsPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobApplicationInput'
+        required: true
+      responses:
+        "201":
+          description: Job application created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobApplication'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobApplications
+  /jobapplications/{id}:
+    get:
+      tags:
+      - JobApplications
+      summary: Retrieve a job application by ID
+      operationId: jobapplicationsIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the job application to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested job application.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobApplication'
+        "404":
+          description: Job application not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobApplications
+    put:
+      tags:
+      - JobApplications
+      summary: Update a job application by ID
+      operationId: jobapplicationsIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the job application to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobApplicationInput'
+        required: true
+      responses:
+        "200":
+          description: Job application updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobApplication'
+        "404":
+          description: Job application not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobApplications
+    delete:
+      tags:
+      - JobApplications
+      summary: Delete a job application by ID
+      operationId: jobapplicationsIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the job application to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Job application deleted successfully.
+        "404":
+          description: Job application not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobApplications
+  /jobcategories:
+    get:
+      tags:
+      - JobCategories
+      summary: Retrieve all job categories
+      operationId: jobcategoriesGET
+      responses:
+        "200":
+          description: A list of job categories.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/JobCategory'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobCategories
+    post:
+      tags:
+      - JobCategories
+      summary: Create a new job category
+      operationId: jobcategoriesPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCategoryInput'
+        required: true
+      responses:
+        "201":
+          description: Job category created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCategory'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobCategories
+  /jobcategories/{id}:
+    get:
+      tags:
+      - JobCategories
+      summary: Retrieve a job category by ID
+      operationId: jobcategoriesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the job category to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested job category.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCategory'
+        "404":
+          description: Job category not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobCategories
+    put:
+      tags:
+      - JobCategories
+      summary: Update a job category by ID
+      operationId: jobcategoriesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the job category to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCategoryInput'
+        required: true
+      responses:
+        "200":
+          description: Job category updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCategory'
+        "404":
+          description: Job category not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobCategories
+    delete:
+      tags:
+      - JobCategories
+      summary: Delete a job category by ID
+      operationId: jobcategoriesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the job category to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Job category deleted successfully.
+        "404":
+          description: Job category not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobCategories
+  /joboffers:
+    get:
+      tags:
+      - JobOffers
+      summary: Retrieve all job offers
+      operationId: joboffersGET
+      responses:
+        "200":
+          description: A list of job offers.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/JobOffer'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobOffers
+    post:
+      tags:
+      - JobOffers
+      summary: Create a new job offer
+      operationId: joboffersPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobOfferInput'
+        required: true
+      responses:
+        "201":
+          description: Job offer created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobOffer'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobOffers
+  /joboffers/{id}:
+    get:
+      tags:
+      - JobOffers
+      summary: Retrieve a job offer by ID
+      operationId: joboffersIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the job offer to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested job offer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobOffer'
+        "404":
+          description: Job offer not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobOffers
+    put:
+      tags:
+      - JobOffers
+      summary: Update a job offer by ID
+      operationId: joboffersIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the job offer to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobOfferInput'
+        required: true
+      responses:
+        "200":
+          description: Job offer updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobOffer'
+        "404":
+          description: Job offer not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobOffers
+    delete:
+      tags:
+      - JobOffers
+      summary: Delete a job offer by ID
+      operationId: joboffersIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the job offer to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Job offer deleted successfully.
+        "404":
+          description: Job offer not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobOffers
+  /modalities:
+    get:
+      tags:
+      - Modalities
+      summary: Retrieve all modalities
+      operationId: modalitiesGET
+      responses:
+        "200":
+          description: A list of modalities.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Modality'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Modalities
+    post:
+      tags:
+      - Modalities
+      summary: Create a new modality
+      operationId: modalitiesPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModalityInput'
+        required: true
+      responses:
+        "201":
+          description: Modality created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modality'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Modalities
+  /modalities/{id}:
+    get:
+      tags:
+      - Modalities
+      summary: Retrieve a modality by ID
+      operationId: modalitiesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the modality to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested modality.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modality'
+        "404":
+          description: Modality not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Modalities
+    put:
+      tags:
+      - Modalities
+      summary: Update a modality by ID
+      operationId: modalitiesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the modality to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModalityInput'
+        required: true
+      responses:
+        "200":
+          description: Modality updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modality'
+        "404":
+          description: Modality not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Modalities
+    delete:
+      tags:
+      - Modalities
+      summary: Delete a modality by ID
+      operationId: modalitiesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the modality to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Modality deleted successfully.
+        "404":
+          description: Modality not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Modalities
+  /notifications:
+    get:
+      tags:
+      - Notifications
+      summary: Retrieve all notifications
+      operationId: notificationsGET
+      responses:
+        "200":
+          description: A list of notifications.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Notification'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Notifications
+    post:
+      tags:
+      - Notifications
+      summary: Create a new notification
+      operationId: notificationsPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationInput'
+        required: true
+      responses:
+        "201":
+          description: Notification created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Notifications
+  /notifications/{id}:
+    get:
+      tags:
+      - Notifications
+      summary: Retrieve a notification by ID
+      operationId: notificationsIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the notification to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested notification.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        "404":
+          description: Notification not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Notifications
+    put:
+      tags:
+      - Notifications
+      summary: Update a notification by ID
+      operationId: notificationsIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the notification to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationInput'
+        required: true
+      responses:
+        "200":
+          description: Notification updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        "404":
+          description: Notification not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Notifications
+    delete:
+      tags:
+      - Notifications
+      summary: Delete a notification by ID
+      operationId: notificationsIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the notification to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: Notification deleted successfully.
+        "404":
+          description: Notification not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Notifications
+  /userroles:
+    get:
+      tags:
+      - UserRoles
+      summary: Retrieve all user roles
+      operationId: userrolesGET
+      responses:
+        "200":
+          description: A list of user roles.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserRole'
+                x-content-type: application/json
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: UserRoles
+    post:
+      tags:
+      - UserRoles
+      summary: Create a new user role
+      operationId: userrolesPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRoleInput'
+        required: true
+      responses:
+        "201":
+          description: User role created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRole'
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: UserRoles
+  /userroles/{id}:
+    get:
+      tags:
+      - UserRoles
+      summary: Retrieve a user role by ID
+      operationId: userrolesIdGET
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the user role to retrieve.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "200":
+          description: The requested user role.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRole'
+        "404":
+          description: User role not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: UserRoles
+    put:
+      tags:
+      - UserRoles
+      summary: Update a user role by ID
+      operationId: userrolesIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the user role to update.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRoleInput'
+        required: true
+      responses:
+        "200":
+          description: User role updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRole'
+        "404":
+          description: User role not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: UserRoles
+    delete:
+      tags:
+      - UserRoles
+      summary: Delete a user role by ID
+      operationId: userrolesIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the user role to delete.
+        required: true
+        style: simple
+        explode: false
+        schema: {}
+      responses:
+        "204":
+          description: User role deleted successfully.
+        "404":
+          description: User role not found.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: UserRoles
+components:
+  schemas:
+    User:
+      properties:
+        ID_user:
+          description: Unique identifier for the user.
+        name:
+          description: Name of the user.
+        email:
+          description: Email of the user.
+        password:
+          description: Password of the user.
+        registration_date:
+          description: The date the user registered.
+          format: date-time
+        status:
+          description: "Status of the user (e.g., active, inactive)."
+        last_access_date:
+          description: The last date the user accessed the system.
+          format: date-time
+        phone:
+          description: Phone number of the user.
+        address:
+          description: Address of the user.
+        ID_city:
+          description: ID of the city associated with the user.
+      example:
+        password: ""
+        registration_date: ""
+        address: ""
+        phone: ""
+        ID_city: ""
+        name: ""
+        last_access_date: ""
+        ID_user: ""
+        email: ""
+        status: ""
+    UserInput:
+      properties:
+        name:
+          description: Name of the user.
+        email:
+          description: Email of the user.
+        password:
+          description: Password of the user.
+        status:
+          description: "Status of the user (e.g., active, inactive)."
+        last_access_date:
+          description: The last date the user accessed the system.
+          format: date-time
+        phone:
+          description: Phone number of the user.
+        address:
+          description: Address of the user.
+        ID_city:
+          description: ID of the city associated with the user
+    Role:
+      properties:
+        ID_role:
+          description: Unique identifier for the role.
+        name:
+          description: Name of the role.
+        description:
+          description: Description of the role.
+      example:
+        name: ""
+        description: ""
+        ID_role: ""
+    RoleInput:
+      required:
+      - name
+      properties:
+        name:
+          description: Name of the role.
+        description:
+          description: Description of the role.
+    Action:
+      properties:
+        ID_action:
+          description: Unique identifier for the action.
+        name_action:
+          description: Name of the action.
+        description_action:
+          description: Description of the action.
+      example:
+        description_action: ""
+        name_action: ""
+        ID_action: ""
+    ActionInput:
+      required:
+      - name_action
+      properties:
+        name_action:
+          description: Name of the action.
+        description_action:
+          description: Description of the action.
+    ApplicationStatus:
+      properties:
+        ID_application_status:
+          description: Unique identifier for the application status.
+        status:
+          description: Name of the application status.
+        description:
+          description: Description of the application status.
+      example:
+        ID_application_status: ""
+        description: ""
+        status: ""
+    ApplicationStatusInput:
+      required:
+      - status
+      properties:
+        status:
+          description: Name of the application status.
+        description:
+          description: Description of the application status.
+    ChangeHistory:
+      properties:
+        ID_change:
+          description: Unique identifier for the change history record.
+        ID_user:
+          description: The ID of the user who made the change.
+        ID_entity:
+          description: The ID of the entity that was changed.
+        ID_action:
+          description: The ID of the action performed.
+        change_date:
+          description: The date and time the change was made.
+          format: date-time
+        change_description:
+          description: Description of the change made.
+      example:
+        change_description: ""
+        ID_entity: ""
+        change_date: ""
+        ID_action: ""
+        ID_user: ""
+        ID_change: ""
+    ChangeHistoryInput:
+      required:
+      - ID_action
+      - ID_entity
+      - ID_user
+      - change_description
+      properties:
+        ID_user:
+          description: The ID of the user who made the change.
+        ID_entity:
+          description: The ID of the entity that was changed.
+        ID_action:
+          description: The ID of the action performed.
+        change_description:
+          description: Description of the change made.
+    City:
+      properties:
+        ID_city:
+          description: Unique identifier for the city.
+        ID_country:
+          description: The ID of the country where the city is located.
+        name:
+          description: The name of the city.
+      example:
+        ID_city: ""
+        ID_country: ""
+        name: ""
+    CityInput:
+      required:
+      - ID_country
+      - name
+      properties:
+        ID_country:
+          description: The ID of the country where the city is located.
+        name:
+          description: The name of the city.
+    Country:
+      properties:
+        ID_country:
+          description: Unique identifier for the country.
+        name:
+          description: The name of the country.
+      example:
+        ID_country: ""
+        name: ""
+    CountryInput:
+      required:
+      - name
+      properties:
+        name:
+          description: The name of the country.
+    Entity:
+      properties:
+        ID_entity:
+          description: Unique identifier for the entity.
+        name:
+          description: The name of the entity.
+        description:
+          description: A description of the entity.
+      example:
+        ID_entity: ""
+        name: ""
+        description: ""
+    EntityInput:
+      required:
+      - name
+      properties:
+        name:
+          description: The name of the entity.
+        description:
+          description: A description of the entity.
+    JobApplication:
+      properties:
+        ID_application:
+          description: Unique identifier for the job application.
+        ID_user:
+          description: The ID of the user who applied.
+        ID_job_offer:
+          description: The ID of the job offer.
+        application_date:
+          description: The date when the application was submitted.
+          format: date-time
+        ID_application_status:
+          description: The ID of the application status.
+        comments:
+          description: Comments about the job application.
+      example:
+        ID_application: ""
+        comments: ""
+        ID_application_status: ""
+        application_date: ""
+        ID_job_offer: ""
+        ID_user: ""
+    JobApplicationInput:
+      required:
+      - ID_application_status
+      - ID_job_offer
+      - ID_user
+      properties:
+        ID_user:
+          description: The ID of the user who applied.
+        ID_job_offer:
+          description: The ID of the job offer.
+        ID_application_status:
+          description: The ID of the application status.
+        comments:
+          description: Comments about the job application.
+    JobCategory:
+      properties:
+        ID_job_category:
+          description: Unique identifier for the job category.
+        name:
+          description: The name of the job category.
+      example:
+        ID_job_category: ""
+        name: ""
+    JobCategoryInput:
+      required:
+      - name
+      properties:
+        name:
+          description: The name of the job category.
+    JobOffer:
+      properties:
+        ID_offer:
+          description: Unique identifier for the job offer.
+        ID_user:
+          description: The ID of the user who posted the job offer.
+        title:
+          description: The title of the job offer.
+        description:
+          description: The detailed description of the job offer.
+        salary_range_min:
+          description: The minimum salary range.
+          format: decimal
+        salary_range_max:
+          description: The maximum salary range.
+          format: decimal
+        publication_date:
+          description: The date when the job offer was published.
+          format: date-time
+        deadline:
+          description: The deadline for the job offer application.
+          format: date-time
+        ID_city:
+          description: The ID of the city where the job is located.
+        status:
+          description: "The status of the job offer (e.g., open, closed)."
+        ID_modality:
+          description: "The ID of the job modality (e.g., remote, in-office)."
+        ID_job_category:
+          description: "The ID of the job category (e.g., Software Development, Marketing)."
+      example:
+        salary_range_max: ""
+        ID_job_category: ""
+        ID_modality: ""
+        salary_range_min: ""
+        ID_city: ""
+        description: ""
+        publication_date: ""
+        title: ""
+        deadline: ""
+        ID_user: ""
+        ID_offer: ""
+        status: ""
+    JobOfferInput:
+      required:
+      - ID_city
+      - ID_job_category
+      - ID_modality
+      - ID_user
+      - deadline
+      - description
+      - salary_range_max
+      - salary_range_min
+      - status
+      - title
+      properties:
+        ID_user:
+          description: The ID of the user who is posting the job offer.
+        title:
+          description: The title of the job offer.
+        description:
+          description: The detailed description of the job offer.
+        salary_range_min:
+          description: The minimum salary range.
+          format: decimal
+        salary_range_max:
+          description: The maximum salary range.
+          format: decimal
+        deadline:
+          description: The deadline for the job offer application.
+          format: date-time
+        ID_city:
+          description: The ID of the city where the job is located.
+        status:
+          description: "The status of the job offer (e.g., open, closed)."
+        ID_modality:
+          description: "The ID of the job modality (e.g., remote, in-office)."
+        ID_job_category:
+          description: "The ID of the job category (e.g., Software Development, Marketing)."
+    Modality:
+      properties:
+        ID_modality:
+          description: Unique identifier for the modality.
+        name:
+          description: "The name of the modality (e.g., remote, in-office)."
+        description:
+          description: A description of the modality.
+      example:
+        ID_modality: ""
+        name: ""
+        description: ""
+    ModalityInput:
+      required:
+      - name
+      properties:
+        name:
+          description: The name of the modality.
+        description:
+          description: A description of the modality.
+    Notification:
+      properties:
+        ID_notification:
+          description: Unique identifier for the notification.
+        ID_user:
+          description: The ID of the user to whom the notification is sent.
+        ID_job_offer:
+          description: The ID of the related job offer.
+        message:
+          description: The message content of the notification.
+        type:
+          description: "Type of notification (e.g., alert, reminder, etc.)."
+        send_date:
+          description: The date and time when the notification was sent.
+          format: date-time
+        read:
+          description: Whether the notification has been read or not.
+      example:
+        read: ""
+        send_date: ""
+        ID_job_offer: ""
+        ID_notification: ""
+        message: ""
+        type: ""
+        ID_user: ""
+    NotificationInput:
+      required:
+      - ID_user
+      - message
+      - type
+      properties:
+        ID_user:
+          description: The ID of the user to whom the notification is sent.
+        ID_job_offer:
+          description: The ID of the related job offer.
+        message:
+          description: The message content of the notification.
+        type:
+          description: "Type of notification (e.g., alert, reminder, etc.)."
+    UserRole:
+      properties:
+        ID_user_role:
+          description: Unique identifier for the user role.
+        ID_user:
+          description: The ID of the user who has the role.
+        ID_role:
+          description: The ID of the role assigned to the user.
+      example:
+        ID_user_role: ""
+        ID_role: ""
+        ID_user: ""
+    UserRoleInput:
+      required:
+      - ID_role
+      - ID_user
+      properties:
+        ID_user:
+          description: The ID of the user to assign the role.
+        ID_role:
+          description: The ID of the role to assign to the user.
