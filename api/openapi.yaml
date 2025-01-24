@@ -11,12 +11,15 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.11
+  version: 1.0.0
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-- url: http://127.0.0.1:3001/
+# Added by API Auto Mocking Plugin
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/nestor-30a/api/1.0.0
+- url: http://127.0.0.1:3001/api/
 tags:
 - name: Reclutamiento y selección de personal
 paths:
@@ -36,30 +39,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
                 x-content-type: application/json
-        "500":
-          description: Server error.
-      x-swagger-router-controller: Users
-    post:
-      tags:
-      - Users
-      summary: Create a new user
-      description: Add a new user to the database.
-      operationId: usersPOST
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserInput'
-        required: true
-      responses:
-        "201":
-          description: User created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        "400":
-          description: Invalid input.
         "500":
           description: Server error.
       x-swagger-router-controller: Users
@@ -146,6 +125,105 @@ paths:
         "500":
           description: Server error.
       x-swagger-router-controller: Users
+  /auth/register:
+    post:
+      tags:
+      - Users
+      summary: Register new User
+      description: Add a new user to the database.
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+        required: true
+      responses:
+        "201":
+          description: User created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Invalid input.
+        "500":
+          description: Server error.
+      x-swagger-router-controller: Users
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login a user
+      description: Authenticate a user with email and password.
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: user@example.com
+                password:
+                  type: string
+                  example: securePassword123
+              required:
+              - email
+              - password
+        required: true
+      responses:
+        "200":
+          description: User authenticated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      email:
+                        type: string
+                        example: user@example.com
+                      name:
+                        type: string
+                        example: John Doe
+                      phone:
+                        type: string
+                        example: 123-456-7890
+                      address:
+                        type: string
+                        example: 123 Main St
+                      description:
+                        type: string
+                        example: User description
+                      img:
+                        type: string
+                        example: https://example.com/profile.jpg
+                      ID_city:
+                        type: integer
+                        example: 1
+        "400":
+          description: Invalid input.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Validation error message
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: Auth
   /roles:
     get:
       tags:
@@ -268,7 +346,7 @@ paths:
       tags:
       - Actions
       summary: Retrieve all actions
-      operationId: actionsGET
+      operationId: getAllActions
       responses:
         "200":
           description: A list of actions.
@@ -285,7 +363,7 @@ paths:
       tags:
       - Actions
       summary: Create a new action
-      operationId: actionsPOST
+      operationId: createAction
       requestBody:
         content:
           application/json:
@@ -307,7 +385,7 @@ paths:
       tags:
       - Actions
       summary: Retrieve an action by ID
-      operationId: actionsIdGET
+      operationId: getActionById
       parameters:
       - name: id
         in: path
@@ -332,7 +410,7 @@ paths:
       tags:
       - Actions
       summary: Update an action by ID
-      operationId: actionsIdPUT
+      operationId: updateAction
       parameters:
       - name: id
         in: path
@@ -363,7 +441,7 @@ paths:
       tags:
       - Actions
       summary: Delete an action by ID
-      operationId: actionsIdDELETE
+      operationId: deleteAction
       parameters:
       - name: id
         in: path
@@ -380,12 +458,12 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: Actions
-  /application-statuses:
+  /applicationStatuses:
     get:
       tags:
       - ApplicationStatuses
       summary: Retrieve all application statuses
-      operationId: application_statusesGET
+      operationId: getAllApplicationStatuses
       responses:
         "200":
           description: A list of application statuses.
@@ -402,7 +480,7 @@ paths:
       tags:
       - ApplicationStatuses
       summary: Create a new application status
-      operationId: application_statusesPOST
+      operationId: createApplicationStatus
       requestBody:
         content:
           application/json:
@@ -419,12 +497,12 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: ApplicationStatuses
-  /application-statuses/{id}:
+  /applicationStatuses/{id}:
     get:
       tags:
       - ApplicationStatuses
       summary: Retrieve an application status by ID
-      operationId: application_statusesIdGET
+      operationId: getApplicationStatusesByID
       parameters:
       - name: id
         in: path
@@ -449,7 +527,7 @@ paths:
       tags:
       - ApplicationStatuses
       summary: Update an application status by ID
-      operationId: application_statusesIdPUT
+      operationId: updateApplicationStatuses
       parameters:
       - name: id
         in: path
@@ -480,7 +558,7 @@ paths:
       tags:
       - ApplicationStatuses
       summary: Delete an application status by ID
-      operationId: application_statusesIdDELETE
+      operationId: deleteApplicationStatuses
       parameters:
       - name: id
         in: path
@@ -497,7 +575,7 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: ApplicationStatuses
-  /change-histories:
+  /changeHistories:
     get:
       tags:
       - ChangeHistories
@@ -536,7 +614,7 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: ChangeHistories
-  /change-histories/{id}:
+  /changeHistories/{id}:
     get:
       tags:
       - ChangeHistories
@@ -965,7 +1043,7 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: Entities
-  /jobapplications:
+  /jobApplications:
     get:
       tags:
       - JobApplications
@@ -1004,7 +1082,7 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: JobApplications
-  /jobapplications/{id}:
+  /jobApplications/{id}:
     get:
       tags:
       - JobApplications
@@ -1082,7 +1160,7 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: JobApplications
-  /jobcategories:
+  /jobCategories:
     get:
       tags:
       - JobCategories
@@ -1121,7 +1199,7 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: JobCategories
-  /jobcategories/{id}:
+  /jobCategories/{id}:
     get:
       tags:
       - JobCategories
@@ -1199,21 +1277,23 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: JobCategories
-  /joboffers:
+      
+  /jobOffers:
     get:
       tags:
       - JobOffers
-      summary: Retrieve all job offers
-      operationId: joboffersGET
+      summary: Get all job offers
+      description: Retrieve a list of all job offers.
+      operationId: getAllJobOffers
       responses:
         "200":
           description: A list of job offers.
           content:
             application/json:
               schema:
+                type: array
                 items:
                   $ref: '#/components/schemas/JobOffer'
-                x-content-type: application/json
         "500":
           description: Internal server error.
       x-swagger-router-controller: JobOffers
@@ -1221,7 +1301,8 @@ paths:
       tags:
       - JobOffers
       summary: Create a new job offer
-      operationId: joboffersPOST
+      description: Add a new job offer to the database.
+      operationId: createJobOffer
       requestBody:
         content:
           application/json:
@@ -1235,26 +1316,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JobOffer'
+        "400":
+          description: Invalid input.
         "500":
           description: Internal server error.
       x-swagger-router-controller: JobOffers
-  /joboffers/{id}:
+
+  /jobOffers/{id}:
     get:
       tags:
       - JobOffers
-      summary: Retrieve a job offer by ID
-      operationId: joboffersIdGET
+      summary: Get job offer by ID
+      description: Retrieve a specific job offer by its ID.
+      operationId: getJobOfferByID
       parameters:
       - name: id
         in: path
-        description: The ID of the job offer to retrieve.
         required: true
-        style: simple
-        explode: false
-        schema: {}
+        schema:
+          type: string
+        description: The ID of the job offer.
       responses:
         "200":
-          description: The requested job offer.
+          description: The job offer data.
           content:
             application/json:
               schema:
@@ -1267,16 +1351,16 @@ paths:
     put:
       tags:
       - JobOffers
-      summary: Update a job offer by ID
-      operationId: joboffersIdPUT
+      summary: Update a job offer
+      description: Update the details of a specific job offer.
+      operationId: updateJobOffer
       parameters:
       - name: id
         in: path
-        description: The ID of the job offer to update.
         required: true
-        style: simple
-        explode: false
-        schema: {}
+        schema:
+          type: string
+        description: The ID of the job offer to update.
       requestBody:
         content:
           application/json:
@@ -1292,22 +1376,24 @@ paths:
                 $ref: '#/components/schemas/JobOffer'
         "404":
           description: Job offer not found.
+        "400":
+          description: Invalid input.
         "500":
           description: Internal server error.
       x-swagger-router-controller: JobOffers
     delete:
       tags:
       - JobOffers
-      summary: Delete a job offer by ID
-      operationId: joboffersIdDELETE
+      summary: Delete a job offer
+      description: Remove a job offer by its ID.
+      operationId: deleteJobOffer
       parameters:
       - name: id
         in: path
-        description: The ID of the job offer to delete.
         required: true
-        style: simple
-        explode: false
-        schema: {}
+        schema:
+          type: string
+        description: The ID of the job offer to delete.
       responses:
         "204":
           description: Job offer deleted successfully.
@@ -1316,6 +1402,123 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: JobOffers
+  
+  /jobOffers/user/{userId}:
+    get:
+      tags:
+      - JobOffers
+      summary: Get job offers by user ID
+      description: Retrieve job offers created by a specific user.
+      operationId: getJobOfferByUserID
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the user.
+      responses:
+        "200":
+          description: A list of job offers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobOffer'
+        "404":
+          description: No job offers found for the user.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobOffers
+  
+  /jobOffers/city/{cityId}:
+    get:
+      tags:
+      - JobOffers
+      summary: Get job offers by city ID
+      description: Retrieve job offers filtered by city.
+      operationId: getJobOfferByCityID
+      parameters:
+      - name: cityId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the city.
+      responses:
+        "200":
+          description: A list of job offers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobOffer'
+        "404":
+          description: No job offers found for the city.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobOffers
+  
+  /jobOffers/modality/{modalityId}:
+    get:
+      tags:
+      - JobOffers
+      summary: Get job offers by modality ID
+      description: Retrieve job offers filtered by modality.
+      operationId: getJobOfferByModalityID
+      parameters:
+      - name: modalityId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the modality.
+      responses:
+        "200":
+          description: A list of job offers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobOffer'
+        "404":
+          description: No job offers found for the modality.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobOffers
+  
+  /jobOffers/category/{categoryId}:
+    get:
+      tags:
+      - JobOffers
+      summary: Get job offers by category ID
+      description: Retrieve job offers filtered by job category.
+      operationId: getJobOfferByJobCategoryID
+      parameters:
+      - name: categoryId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the job category.
+      responses:
+        "200":
+          description: A list of job offers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobOffer'
+        "404":
+          description: No job offers found for the job category.
+        "500":
+          description: Internal server error.
+      x-swagger-router-controller: JobOffers
+
   /modalities:
     get:
       tags:
@@ -1550,7 +1753,7 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: Notifications
-  /userroles:
+  /userRoles:
     get:
       tags:
       - UserRoles
@@ -1589,7 +1792,7 @@ paths:
         "500":
           description: Internal server error.
       x-swagger-router-controller: UserRoles
-  /userroles/{id}:
+  /userRoles/{id}:
     get:
       tags:
       - UserRoles
@@ -1693,17 +1896,6 @@ components:
           description: Address of the user.
         ID_city:
           description: ID of the city associated with the user.
-      example:
-        password: ""
-        registration_date: ""
-        address: ""
-        phone: ""
-        ID_city: ""
-        name: ""
-        last_access_date: ""
-        ID_user: ""
-        email: ""
-        status: ""
     UserInput:
       properties:
         name:
@@ -1731,10 +1923,6 @@ components:
           description: Name of the role.
         description:
           description: Description of the role.
-      example:
-        name: ""
-        description: ""
-        ID_role: ""
     RoleInput:
       required:
       - name
@@ -1751,10 +1939,6 @@ components:
           description: Name of the action.
         description_action:
           description: Description of the action.
-      example:
-        description_action: ""
-        name_action: ""
-        ID_action: ""
     ActionInput:
       required:
       - name_action
@@ -1771,10 +1955,6 @@ components:
           description: Name of the application status.
         description:
           description: Description of the application status.
-      example:
-        ID_application_status: ""
-        description: ""
-        status: ""
     ApplicationStatusInput:
       required:
       - status
@@ -1798,13 +1978,6 @@ components:
           format: date-time
         change_description:
           description: Description of the change made.
-      example:
-        change_description: ""
-        ID_entity: ""
-        change_date: ""
-        ID_action: ""
-        ID_user: ""
-        ID_change: ""
     ChangeHistoryInput:
       required:
       - ID_action
@@ -1828,10 +2001,6 @@ components:
           description: The ID of the country where the city is located.
         name:
           description: The name of the city.
-      example:
-        ID_city: ""
-        ID_country: ""
-        name: ""
     CityInput:
       required:
       - ID_country
@@ -1847,9 +2016,6 @@ components:
           description: Unique identifier for the country.
         name:
           description: The name of the country.
-      example:
-        ID_country: ""
-        name: ""
     CountryInput:
       required:
       - name
@@ -1864,10 +2030,6 @@ components:
           description: The name of the entity.
         description:
           description: A description of the entity.
-      example:
-        ID_entity: ""
-        name: ""
-        description: ""
     EntityInput:
       required:
       - name
@@ -1891,13 +2053,6 @@ components:
           description: The ID of the application status.
         comments:
           description: Comments about the job application.
-      example:
-        ID_application: ""
-        comments: ""
-        ID_application_status: ""
-        application_date: ""
-        ID_job_offer: ""
-        ID_user: ""
     JobApplicationInput:
       required:
       - ID_application_status
@@ -1918,9 +2073,6 @@ components:
           description: Unique identifier for the job category.
         name:
           description: The name of the job category.
-      example:
-        ID_job_category: ""
-        name: ""
     JobCategoryInput:
       required:
       - name
@@ -1957,19 +2109,6 @@ components:
           description: "The ID of the job modality (e.g., remote, in-office)."
         ID_job_category:
           description: "The ID of the job category (e.g., Software Development, Marketing)."
-      example:
-        salary_range_max: ""
-        ID_job_category: ""
-        ID_modality: ""
-        salary_range_min: ""
-        ID_city: ""
-        description: ""
-        publication_date: ""
-        title: ""
-        deadline: ""
-        ID_user: ""
-        ID_offer: ""
-        status: ""
     JobOfferInput:
       required:
       - ID_city
@@ -2014,10 +2153,6 @@ components:
           description: "The name of the modality (e.g., remote, in-office)."
         description:
           description: A description of the modality.
-      example:
-        ID_modality: ""
-        name: ""
-        description: ""
     ModalityInput:
       required:
       - name
@@ -2043,14 +2178,6 @@ components:
           format: date-time
         read:
           description: Whether the notification has been read or not.
-      example:
-        read: ""
-        send_date: ""
-        ID_job_offer: ""
-        ID_notification: ""
-        message: ""
-        type: ""
-        ID_user: ""
     NotificationInput:
       required:
       - ID_user
@@ -2073,10 +2200,6 @@ components:
           description: The ID of the user who has the role.
         ID_role:
           description: The ID of the role assigned to the user.
-      example:
-        ID_user_role: ""
-        ID_role: ""
-        ID_user: ""
     UserRoleInput:
       required:
       - ID_role
